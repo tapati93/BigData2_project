@@ -1,0 +1,6 @@
+[core]
+    remote = storage
+['remote "myremote"']
+    url = http://bdp2.s3-website.eu-central-1.amazonaws.com
+['remote "storage"']
+    url = s3://bdp2
