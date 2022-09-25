@@ -1,0 +1,80 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - path: src/prepare.py
+      md5: faca3a37954d3325d0fb8a4d7a06d206
+      size: 1167
+    params:
+      params.yaml:
+        prepare.num_tweets: 500
+    outs:
+    - path: data/prepared
+      md5: 6dadca36487d7f14635df165a9d5049f.dir
+      size: 75044
+      nfiles: 1
+  extract:
+    cmd: python src/data_extraction.py
+    deps:
+    - path: src/data_extraction.py
+      md5: 96d11ac31bf0b78113cfec7035ef3997
+      size: 1584
+    params:
+      params.yaml:
+        extract.num_tweets: 2000
+    outs:
+    - path: Data/extracted
+      md5: ac1c7b9857b58feb2cbf7c0410f55a32.dir
+      size: 292901
+      nfiles: 1
+  data_extraction:
+    cmd: python src/data_extraction.py
+    deps:
+    - path: src/data_extraction.py
+      md5: dc5a9e8f2465ec5ef8527938f2b75ebe
+      size: 1322
+    params:
+      params.yaml:
+        data_extraction.num_tweets: 200
+    outs:
+    - path: data/extracted
+      md5: 6d5098fd82ae6b10b196733b812cd80a.dir
+      size: 31189
+      nfiles: 1
+  featurize:
+    cmd: python src/featurization.py data/prepared data/features
+    deps:
+    - path: data/prepared
+      md5: 6dadca36487d7f14635df165a9d5049f.dir
+      size: 75044
+      nfiles: 1
+    - path: src/featurization.py
+      md5: aab474c025339cbc3b1d3f962fce3acf
+      size: 2236
+    outs:
+    - path: data/features
+      md5: 8770bd1454a23389e61b187e996ef954.dir
+      size: 153264
+      nfiles: 1
+  LogistictrainEvaluate:
+    cmd: python src/LogistictrainEvaluate.py data/features Logisticmodel.pkl
+    deps:
+    - path: data/features
+      md5: 8770bd1454a23389e61b187e996ef954.dir
+      size: 153264
+      nfiles: 1
+    - path: src/LogistictrainEvaluate.py
+      md5: ff34883d5cd6131213095f8e4d63537c
+      size: 8279
+    params:
+      params.yaml:
+        LogistictrainEvaluate.max_features: 5000
+        LogistictrainEvaluate.min_split: 3
+        LogistictrainEvaluate.n_est: 30
+        LogistictrainEvaluate.seed: 26105111
+        LogistictrainEvaluate.split: 0.05
+    outs:
+    - path: Logisticmodel.pkl
+      md5: 7ed7c063e2e630d008334f50e27b3d5e
+      size: 37558

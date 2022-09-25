@@ -1,0 +1,14 @@
+prepare:
+  num_tweets: 500
+SVMtrainEvaluate:
+  seed: 26105111
+  n_est: 30
+  min_split: 3
+  split: 0.05
+  max_features: 5000
+LogistictrainEvaluate:
+  seed: 26105111
+  n_est: 30
+  min_split: 3
+  split: 0.05
+  max_features: 5000

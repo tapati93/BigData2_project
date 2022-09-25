@@ -1,0 +1,15 @@
+dvclive>=0.6
+pandas
+pyaml
+scikit-learn
+scipy
+matplotlib
+tweepy
+lxml
+preprocessor
+gensim
+textblob
+dvclive
+seaborn
+flask
+dvc
